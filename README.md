@@ -18,4 +18,5 @@ Grid-pohjainen peli, jossa pyritään keräämään pisteitä samanvärisillä k
 
 
 
-**original** https://docs.google.com/document/d/1nhNkQCeydqpb5P4dhTDZu_czu-0Q3KMs1R16hDsWcGA/
+[Online in-editing version at Google Drive](https://docs.google.com/document/d/1nhNkQCeydqpb5P4dhTDZu_czu-0Q3KMs1R16hDsWcGA/)
+
