@@ -1,16 +1,14 @@
 var Game = function(selector) {
-	var t = {
-		selector: selector,
-		block:    null,
-		grid:     null
-	};
 
-	t.init = function(block, grid) {
+	this.selector = selector;
+	this.block    = null;
+	this.grid     = null;
+
+	this.init = function(block, grid) {
 		this.block = block;
 		this.grid  = grid;
 	};
 
-	t.run = function() {
+	this.run = function() {
 	};
-	return t;
 };

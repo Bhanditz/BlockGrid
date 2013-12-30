@@ -1,25 +1,26 @@
 <html>
 	<head>
 		<title>BlockGrid</title>
-		<base href="http://leonarven.github.io/BlockGrid/">
 		<link type="text/css" rel="stylesheet" href="css/game.css">
 	</head>
 	<body>
 		<h1>TODO: Put game here</h1>
-		<div id="game"></div>
+		<section id="game">
+			<div class="grid"></div>
+		</section>
 
-		<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
 		<script type="text/javascript" src="js/game/block.js"></script>
 		<script type="text/javascript" src="js/game/grid.js"></script>
 		<script type="text/javascript" src="js/game/game.js"></script>
 		<script type="text/javascript">
-			var game  = Game("#game"),
-			    block = Block(".block", 32),
-			    grid  = Grid(10);
+			var game  = new Game("#game"),
+			    block = new Block(".block", 32),
+			    grid  = new Grid(block, "#game > .grid", 10);
 			game.init(block, grid);
 
 			game.run();
-
 		</script>
 	</body>
 </html>
