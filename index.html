@@ -5,9 +5,7 @@
 	</head>
 	<body>
 		<h1>TODO: Put game here</h1>
-		<section id="game">
-			<div class="grid"></div>
-		</section>
+		<section id="game"></section>
 
 		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="js/common.js"></script>
@@ -16,8 +14,8 @@
 		<script type="text/javascript" src="js/game/game.js"></script>
 		<script type="text/javascript">
 			var game  = new Game("#game"),
-			    block = new Block(".block", 32),
-			    grid  = new Grid(block, "#game > .grid", 10);
+			    block = new Block("#game", 32),
+			    grid  = new Grid("#game", block, 10);
 			game.init(block, grid);
 
 			game.run();
