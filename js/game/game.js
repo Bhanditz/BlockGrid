@@ -13,6 +13,40 @@ var Game = function(selector) {
 	};
 
 	this.run = function() {
+		var _game = this,
+			eventClearSelection = function(e){
+				$(_game.selector+" .block.selected").removeClass("selected");
+			},
+			eventBlockOnClick = function(e){
+				console.log("click", this, _game);
+			},
+		    eventBlockOnMouseDown = function(e){
+				console.log("mousedown", this, _game);
+				this.event=e;
+				$(this).addClass("selected");
+				eventClearSelection();
+			},
+			eventBlockOnMouseUp = function(e){
+				console.log("mouseup", this, _game);
+				eventClearSelection();
+				if ((new Date().getTime())-this.event.timeStamp < 100) eventBlockOnClick();
+				this.event=e;
+			},
+			eventBodyOnMouseUp = function(e){
+				console.log("mouseup", this, _game);
+				eventClearSelection();
+			};
+
+
+
+		$("body").on("mouseup", eventBodyOnMouseUp);
+		for(y = 0; y < this.grid.edgeLength; y++) {
+			for(x = 0; x < this.grid.edgeLength; x++) {
+//				this.grid.matrix[y][x].elem.on("click", eventBlockOnClick);
+				this.grid.matrix[y][x].elem.on("mousedown", eventBlockOnMouseDown);
+				this.grid.matrix[y][x].elem.on("mouseup", eventBlockOnMouseUp);
+			}
+		}
 	};
 
 	var metaElem = $('<article class="meta">'+
