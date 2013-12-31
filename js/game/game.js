@@ -15,30 +15,42 @@ var Game = function(selector) {
 	this.run = function() {
 		var _game = this,
 			selected = null,
+			lastEvent = null;
 			eventClearSelection = function(e){
-				$(_game.selector+" .block.selected").removeClass("selected");
+				console.log("eventClearSelection", e);
+				if (lastEvent == "mousedown")
+					$(_game.selector+" .block.selected").removeClass("selected");
+				selected = null;
 			},
 			eventBlockOnClick = function(e){
+				e.preventDefault();
 				console.log("click", this, _game);
 			},
 		    eventBlockOnMouseDown = function(e){
 				console.log("mousedown", this, _game);
 				this.event = e;
 				selected = this;
+				lastEvent = "mousedown";
 				$(this).addClass("selected");
-				eventClearSelection();
-				setTimeout(function(){$(selected).bind("mouseUp")},1000);
+				eventClearSelection(e);
+				setTimeout(function(){$(selected).bind("mouseUp")}, 1000);
 			},
 			eventBlockOnMouseUp = function(e){
-				console.log("mouseup", this, _game);
-				eventClearSelection();
+				e.preventDefault();
+				selected = null;
 				try {
 					if ((new Date().getTime())-this.event.timeStamp < 100) eventBlockOnClick();
 				} catch(exception) {}
+				eventClearSelection(e);
+			},
+			eventMouseMoveOtherBlock = function(e){
+				alert("eventMouseMoveOtherBlock");
+				console.log("eventMouseMoveOtherBlock", this, e);
 			},
 			eventBodyOnMouseUp = function(e){
-				console.log("mouseup", this, _game);
-				eventClearSelection();
+				e.preventDefault();
+				selected = null;
+				eventClearSelection(e);
 			};
 
 
@@ -50,10 +62,23 @@ var Game = function(selector) {
 				this.grid.matrix[y][x].elem.on("mouseup", eventBlockOnMouseUp);
 			}
 		}
+
+		var gameIntervalTimer = setInterval(function(){
+			var time = parseInt($(_game.selector+" .meta .time span").attr("data-time"))-1;
+			console.log(time);
+			if (time <= 0) {
+				alert("NULLLLLLL");
+				clearInterval(gameIntervalTimer);
+				return;
+			} else {
+				$(_game.selector+" .meta .time span").attr("data-time", time);
+				$(_game.selector+" .meta .time span").html(time);
+			}
+		}, 1000);
 	};
 
 	var metaElem = $('<article class="meta">'+
-						'<div class="time"><span></span></div>'+
+						'<div class="time"><span data-time="60"></span></div>'+
 						'<div class="points"><span></span></div>'+
 					'</article>');
 	var gridElem = $('<div class="grid wrapper"></div>');
