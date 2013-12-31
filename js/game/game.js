@@ -14,6 +14,7 @@ var Game = function(selector) {
 
 	this.run = function() {
 		var _game = this,
+			selected = null,
 			eventClearSelection = function(e){
 				$(_game.selector+" .block.selected").removeClass("selected");
 			},
@@ -22,15 +23,18 @@ var Game = function(selector) {
 			},
 		    eventBlockOnMouseDown = function(e){
 				console.log("mousedown", this, _game);
-				this.event=e;
+				this.event = e;
+				selected = this;
 				$(this).addClass("selected");
 				eventClearSelection();
+				setTimeout(function(){$(selected).bind("mouseUp")},1000);
 			},
 			eventBlockOnMouseUp = function(e){
 				console.log("mouseup", this, _game);
 				eventClearSelection();
-				if ((new Date().getTime())-this.event.timeStamp < 100) eventBlockOnClick();
-				this.event=e;
+				try {
+					if ((new Date().getTime())-this.event.timeStamp < 100) eventBlockOnClick();
+				} catch(exception) {}
 			},
 			eventBodyOnMouseUp = function(e){
 				console.log("mouseup", this, _game);
@@ -42,7 +46,6 @@ var Game = function(selector) {
 		$("body").on("mouseup", eventBodyOnMouseUp);
 		for(y = 0; y < this.grid.edgeLength; y++) {
 			for(x = 0; x < this.grid.edgeLength; x++) {
-//				this.grid.matrix[y][x].elem.on("click", eventBlockOnClick);
 				this.grid.matrix[y][x].elem.on("mousedown", eventBlockOnMouseDown);
 				this.grid.matrix[y][x].elem.on("mouseup", eventBlockOnMouseUp);
 			}
