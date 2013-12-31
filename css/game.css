@@ -15,3 +15,16 @@
 #game .block.family3 { background-color: #0000ff; }
 #game .block.family4 { background-color: #ffff00; }
 #game .block.family5 { background-color: #ff00ff; }
+
+
+#game .meta {
+	height: 32px;
+}
+
+#game .meta .time {
+	float: left;
+}
+
+#game .meta .points {
+	float: right;
+}
